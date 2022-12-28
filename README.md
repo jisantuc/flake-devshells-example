@@ -13,7 +13,7 @@ There's also an "omnishell" that includes all of the dependencies of the distinc
 The shells are presented in a [_nix flake_](https://nixos.wiki/wiki/Flakes).
 To use any of them, you'll need to:
 
-- install the nix package manager (this can be done safely and won't affect anything else in your system)
+- [install](https://nixos.org/download.html) the nix package manager (this can be done safely and won't affect anything else in your system)
 - enable flakes support by adding `experimental-features = nix-command flakes` to `$HOME/.config/nix/nix.conf`
 - fire up one of the shells: `nix develop .#javascript` (or `.#python`, `.#java`, or `.#omnishell`)
 
