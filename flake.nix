@@ -12,31 +12,42 @@
       pkgs = import nixpkgs { inherit system; };
     in
     with pkgs;
+
+    let
+      pythonDeps = [
+        python39
+        python39Packages.poetry
+        python39Packages.black
+      ];
+      javascriptDeps = [
+        nodejs-16_x
+        yarn
+        nodePackages.prettier
+        nodePackages.eslint
+      ];
+      javaDeps = [
+        openjdk11
+        (sbt.override { jre = openjdk11; })
+      ];
+    in
+
     {
 
       devShells.${system} = {
         java = mkShell {
-          packages =
-            [
-              openjdk11
-              (sbt.override { jre = openjdk11; })
-            ];
+          packages = javaDeps;
         };
 
         python = mkShell {
-          packages = [
-            python39
-            python39Packages.poetry
-            python39Packages.black
-          ];
+          packages = pythonDeps;
         };
 
         javascript = mkShell {
-          packages = [
-            yarn
-            nodePackages.prettier
-            nodePackages.eslint
-          ];
+          packages = javascriptDeps;
+        };
+
+        omnishell = mkShell {
+          packages = javascriptDeps ++ pythonDeps ++ javaDeps;
         };
       };
     };
